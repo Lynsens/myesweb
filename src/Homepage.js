@@ -5,8 +5,15 @@ const MiddleContatiner = () => {
     
     const [currIndex, setIndex] = useState(0);
 
+    const slides = [
+        'photo-1544511916-0148ccdeb877',
+        'photo-1544572571-ab94fd872ce4',
+        'reserve/bnW1TuTV2YGcoh1HyWNQ_IMG_0207.JPG',
+        'photo-1540206395-68808572332f',
+      ]
+      
     const l = [0,1,2];
-    const imgs = ['./1.jpg', './1.jpg', './1.jpg'];
+    const imgs = ['./img/1.jpg', './img/1.jpg', './img/1.jpg'];
     const t = ["img1", "img2", "img3"];
 
     const handleClick = (index) => {
@@ -42,6 +49,7 @@ const MiddleContatiner = () => {
         <IndexButtons/>
         <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currIndex + 1}.jpg`)}/>
         <SubTitle/>
+        <div style = {{backgroundImage: `url(./img/${currIndex + 1}.jpg)`}} />
         </>
     
     )
