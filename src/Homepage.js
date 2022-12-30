@@ -1,5 +1,6 @@
 import './Homepage.css';
 import React, { useEffect, useState } from 'react';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import Nodes, {Language} from './mock';
 
 const MiddleContatiner = () => {
@@ -12,9 +13,9 @@ const MiddleContatiner = () => {
         setIndex(0);
     }
 
-    const currNodes = Nodes.filter(n => n.language === currLan);
+    const currNodes = Nodes.filter(n => n.language === currLan || n.language === Language.ALL);
 
-    const IndexingButton = (index) => {
+    const indexingButton = (index) => {
         return(
         <button className='indexingButton' 
                 key = {index}
@@ -24,7 +25,7 @@ const MiddleContatiner = () => {
 
     const IndexButtons = () => {
         return(
-            currNodes.map((_n, index) => IndexingButton(index))
+            currNodes.map((_n, index) => indexingButton(index))
             );
     };
 
@@ -37,26 +38,57 @@ const MiddleContatiner = () => {
         )
     }
 
-    const SubTitle = () => {
+    const ViewPostButton = () => {
         return(
-            <p>{currNodes[currIndex].word}</p>
+            <button onClick={navigateToPost}>{currNodes[currIndex].alt}</button>
         )
     };
+
+    const navigate = useNavigate();
+
+    const navigateToPost = () => {
+        navigate('/post');
+    }
+
+    const navigateHome = () => {
+        navigate('/');
+    }
+
+    const HomeButton = () => 
+        <button onClick = {navigateHome}>Home</button>;
+
+    const currNode = currNodes[currIndex];
 
     useEffect(() => {
         console.log(currIndex);
         console.log(currNodes[currIndex]);
-        // currIndex = 0;
-    }, [currIndex, currLan]);
+    }, [currIndex, currLan, currNodes]);
+
+    useEffect(() =>{
+        navigate('/');
+    }, [currLan]);
 
     return(
         <>
-        <IndexButtons/>
-        {/* <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currIndex + 1}.jpg`)}/> */}
-        <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currNodes[currIndex].image}.jpg`)}/>
-        {/* <img src = {require(n1.image)}/> */}
-        <SubTitle/>
         <LanguageButtons/>
+        <Routes>
+            <Route path = "/" element = {
+                <> 
+                <IndexButtons/>
+                {/* <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currIndex + 1}.jpg`)}/> */}
+                <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currNode.image}.jpg`)}/>
+                {/* <img src = {require(n1.image)}/> */}
+                <ViewPostButton/>
+                </>
+            } />
+            <Route path = "/post" element = {
+                <>
+                    <HomeButton/>
+                    <p>{currNode.content}</p>
+                    <p>currIndex = {currIndex}, currLan = {currLan}</p>
+                </>
+            }/>
+        </Routes>
         </>
     
     )
