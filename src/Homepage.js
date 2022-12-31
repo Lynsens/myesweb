@@ -1,12 +1,37 @@
 import './Homepage.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Nodes, {Language} from './mock';
+
+const useComponentVisible = (initState) => {
+    const [isComponentVisible, setIsComponentVisible] = useState(
+        initState
+      );
+      const ref = useRef(null);
+    
+      const handleClickOutside = event => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsComponentVisible(false);
+        }
+      };
+
+      useEffect(() => {
+        // document.addEventListener("keydown", handleHideDropdown, true);
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+        //   document.removeEventListener("keydown", handleHideDropdown, true);
+          document.removeEventListener("click", handleClickOutside, true);
+        };
+      });
+
+    return { ref, isComponentVisible, setIsComponentVisible };
+}
 
 const MiddleContatiner = () => {
 
     const [currIndex, setIndex] = useState(0);
     const [currLan, setLan] = useState(Language.ENG);
+    const {ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
     const switchLan = (language) => {
         setLan(language);
@@ -30,10 +55,14 @@ const MiddleContatiner = () => {
     };
 
     const LanguageButtons = () => {
+        const handleClick = (language) => {
+            switchLan(language);
+            setIsComponentVisible(false);
+        }
         return(
             <>
-                <button onClick={() => switchLan(Language.ENG)}>ENG</button>
-                <button onClick={() => switchLan(Language.CHN)}>CNH</button>
+                <button onClick={() => handleClick(Language.ENG)}>ENG</button>
+                <button onClick={() => handleClick(Language.CHN)}>CNH</button>
             </>
         )
     }
@@ -62,7 +91,8 @@ const MiddleContatiner = () => {
     useEffect(() => {
         console.log(currIndex);
         console.log(currNodes[currIndex]);
-    }, [currIndex, currLan, currNodes]);
+        console.log(isComponentVisible);
+    }, [currIndex, currLan, currNodes, isComponentVisible]);
 
     useEffect(() =>{
         navigate('/');
@@ -70,7 +100,12 @@ const MiddleContatiner = () => {
 
     return(
         <>
-        <LanguageButtons/>
+        <div ref = {ref}>
+            {!isComponentVisible && (
+                <button onClick={()=>setIsComponentVisible(true)}> click to show </button>
+            )}
+            {isComponentVisible && (<LanguageButtons/>)}
+        </div>
         <Routes>
             <Route path = "/" element = {
                 <> 
