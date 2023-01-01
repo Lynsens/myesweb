@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import MiddleContatiner from './Homepage';
+import HomePage from './Homepage';
+import LandingPage from './Landingpage';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
-    <MiddleContatiner />
+      <HomePage/>
   </Router>
 );
 
