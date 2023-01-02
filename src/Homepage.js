@@ -1,7 +1,8 @@
 import './Homepage.css';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Nodes, {Language} from './mock';
+import { LanguageButtons, HomeButton } from './components';
 
 const useComponentVisible = (initState) => {
     const [isComponentVisible, setIsComponentVisible] = useState(
@@ -27,50 +28,25 @@ const useComponentVisible = (initState) => {
     return { ref, isComponentVisible, setIsComponentVisible };
 }
 
-const useLanguageSelection = (initState) => {
-    
-    const [langSelected, setLanSelected] = useState(initState);
-
-    return { langSelected, setLanSelected };
-}
-
 const HomePage = () => {
-    // const [langSelected, setLanSelected] = useState(false);
-    const storedLanguageSelected = window.sessionStorage.getItem("langSelected");
-    console.log(storedLanguageSelected);
-    // const storedLanguage = window.sessionStorage.getItem("currLan");
-    // const storedIndex = window.sessionStorage.getItem("currIndex");
-
-    const [currLan, setCurrLan] = useState(Language.ENG);
-    const [currIndex, setIndex] = useState(0);
+    const [currLan, setCurrLan] = useState(window.sessionStorage.getItem("currLan") ?? Language.ENG);
+    const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
     const {ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
-    const [langSelected, setLanSelected] = useState(storedLanguageSelected ? storedLanguageSelected : false);
+    const [langSelected, setLanSelected] = useState(window.sessionStorage.getItem("langSelected") ?? false);
 
-    const switchLan = (language) => {
+    const handleClick = (language) => {
         setCurrLan(language);
         setIndex(0);
-    }
-
-    const LanguageButtons = () => {
-        const handleClick = (language) => {
-            switchLan(language);
-            setIsComponentVisible(false);
-            setLanSelected(true)
-        }
-        return(
-            <>
-                <button onClick={() => handleClick(Language.ENG)}>ENG</button>
-                <button onClick={() => handleClick(Language.CHN)}>CNH</button>
-            </>
-        )
+        setIsComponentVisible(false);
+        setLanSelected(true)
     }
 
     const WelcomePage = () => {
         return (
             <>
             <p>select a language</p>
-            <LanguageButtons/>
+            <LanguageButtons handleClick={handleClick}/>
             </>
         );
     }
@@ -102,45 +78,45 @@ const HomePage = () => {
         const navigate = useNavigate();
     
         const navigateToPost = () => {
-            navigate('/post');
+            navigate('/myesweb/post');
         }
     
         const navigateHome = () => {
-            navigate('/');
+            navigate('/myesweb');
         }
     
-        const HomeButton = () => 
-            <button onClick = {navigateHome}>Home</button>;
-    
         const currNode = currNodes[currIndex];
-
-        useEffect(() => {
-            setLanSelected(JSON.parse(window.sessionStorage.getItem("langSelected")));
-          }, []);
         
         useEffect(() => {
             window.sessionStorage.setItem("langSelected", langSelected);
         }, [langSelected]);
 
-    
+        useEffect(() => {
+            window.sessionStorage.setItem("currLan", currLan);
+        }, [currLan]);
+
+        useEffect(() => {
+            window.sessionStorage.setItem("currIndex", currIndex);
+        }, [currIndex]);
+
         useEffect(() => {
             // console.log(JSON.parse(window.sessionStorage.getItem("langSelected")));
         }, [currIndex, currLan, currNodes, isComponentVisible]);
     
         useEffect(() =>{
-            navigate('/');
+            navigate('/myesweb');
         }, [currLan]);
 
         return(
             <>
             <Routes>
-                <Route path = "/" element = {
+                <Route path = "/myesweb" element = {
                     <> 
                         <div ref = {ref}>
                             {!isComponentVisible && (
-                                <button onClick={()=>setIsComponentVisible(true)}> click to show </button>
+                                <button class = "language_button" onClick={()=>setIsComponentVisible(true)}/>
                             )}
-                            {isComponentVisible && (<LanguageButtons/>)}
+                            {isComponentVisible && (<LanguageButtons handleClick={handleClick}/>)}
                         </div>
                         <IndexButtons/>
                         {/* <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currIndex + 1}.jpg`)}/> */}
@@ -149,9 +125,9 @@ const HomePage = () => {
                         <ViewPostButton/>
                     </>
                 } />
-                <Route path = "/post" element = {
+                <Route path = "/myesweb/post" element = {
                     <>
-                        <HomeButton/>
+                        <HomeButton handleClick = {navigateHome}/>
                         <p>{currNode.content}</p>
                         <p>currIndex = {currIndex}, currLan = {currLan}</p>
                     </>
@@ -162,7 +138,8 @@ const HomePage = () => {
     };
     return(
         <>
-        {!langSelected ? <WelcomePage/> :  <MiddleContatiner/>}
+        {console.log(currIndex)}
+        {!langSelected ? <WelcomePage/> : <MiddleContatiner/>}
         </>
     )
 }

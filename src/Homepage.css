@@ -4,33 +4,15 @@
     /* will-change: opacity; */
 }
 
-html,
-body,
-#root {
-  height: 100%;
-  width: 100%;
+button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
 }
 
-body {
-  font-family: system-ui;
-  margin: 0;
-}
-
-*,
-*:after,
-*:before {
-  box-sizing: border-box;
-}
-
-.flex {
-  display: flex;
-  align-items: center;
-}
-
-.flex.fill {
-  height: 100%;
-}
-
-.flex.center {
-  justify-content: center;
+.language_button {
+  background-image: url('./icons/language icon.png');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
 }
