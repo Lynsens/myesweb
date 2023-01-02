@@ -55,17 +55,20 @@ const HomePage = () => {
     
         const currNodes = Nodes.filter(n => n.language === currLan || n.language === Language.ALL);
     
-        const indexingButton = (index) => {
+        const indexingButton = (index, currIndex) => {
             return(
             <button className='index_button' 
                     key = {index}
+                    style = {
+                        index == currIndex ? {opacity: 1, fontWeight: "550"} : {opacity: 0.5}
+                    }
                     onClick={() => setIndex(index)}>
                 {index}
             </button>)}
     
         const IndexButtons = () => {
             return(
-                currNodes.map((_n, index) => indexingButton(index))
+                currNodes.map((_n, index) => indexingButton(index, currIndex))
                 );
         };
     
@@ -100,7 +103,6 @@ const HomePage = () => {
         }, [currIndex]);
 
         useEffect(() => {
-            // console.log(JSON.parse(window.sessionStorage.getItem("langSelected")));
         }, [currIndex, currLan, currNodes, isComponentVisible]);
     
         useEffect(() =>{
