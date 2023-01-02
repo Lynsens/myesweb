@@ -4,6 +4,10 @@ button {
   border: none;
 }
 
+body {
+  background-color: rgba(242, 245, 248, 0.2)
+}
+
 
 .homepage {
   display: grid;

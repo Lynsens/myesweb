@@ -25,6 +25,6 @@ const en3 = new Node(Language.ENG,'3', "the third story", "2013", "black coffee 
 const a4 = new Node(Language.ALL,'1', "all language", "2009", "dynamic programming");
 
 
-const Nodes = [en1, en2, en3, a4];
+const Nodes = [en1, en2, en3, a4, a4, a4, a4, a4];
 
 export default Nodes;
