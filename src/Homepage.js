@@ -17,10 +17,8 @@ const useComponentVisible = (initState) => {
       };
 
       useEffect(() => {
-        // document.addEventListener("keydown", handleHideDropdown, true);
         document.addEventListener("click", handleClickOutside, true);
         return () => {
-        //   document.removeEventListener("keydown", handleHideDropdown, true);
           document.removeEventListener("click", handleClickOutside, true);
         };
       });
@@ -57,7 +55,7 @@ const HomePage = () => {
     
         const indexingButton = (index) => {
             return(
-            <button className='indexingButton' 
+            <button className='index_button' 
                     key = {index}
                     onClick={() => setIndex(index)}>
                 {index}
@@ -71,7 +69,7 @@ const HomePage = () => {
     
         const ViewPostButton = () => {
             return(
-                <button onClick={navigateToPost}>{currNodes[currIndex].alt}</button>
+                <button class="click_to_view_button" onClick={navigateToPost}>{`${currNodes[currIndex].alt}   >`}</button>
             )
         };
     
@@ -111,19 +109,24 @@ const HomePage = () => {
             <>
             <Routes>
                 <Route path = "/myesweb" element = {
-                    <> 
-                        <div ref = {ref}>
-                            {!isComponentVisible && (
-                                <button class = "language_button" onClick={()=>setIsComponentVisible(true)}/>
-                            )}
-                            {isComponentVisible && (<LanguageButtons handleClick={handleClick}/>)}
+                    <div class="homepage"> 
+                        <div class="top_bar">
+                            <div class="language_button_container" ref = {ref}>
+                                {!isComponentVisible && (
+                                    <button class = "language_button" onClick={()=>setIsComponentVisible(true)}/>
+                                )}
+                                {isComponentVisible && (<LanguageButtons handleClick={handleClick}/>)}
+                            </div>
+                            <div class="index_button_container">
+                            <IndexButtons/>
+                            </div>
+                            <p class="name"> Mocun Ye </p>
                         </div>
-                        <IndexButtons/>
-                        {/* <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currIndex + 1}.jpg`)}/> */}
-                        <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currNode.image}.jpg`)}/>
-                        {/* <img src = {require(n1.image)}/> */}
-                        <ViewPostButton/>
-                    </>
+                        <div className="content_container">
+                            <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currNode.image}.jpg`)}/>
+                            <ViewPostButton/>
+                        </div>
+                    </div>
                 } />
                 <Route path = "/myesweb/post" element = {
                     <>
