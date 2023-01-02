@@ -71,3 +71,9 @@ body {
   width: 20px;
   height: 20px;
 }
+
+.welcomepage{
+  margin-top: 10em;
+  display: grid;
+  text-align: center;
+}
