@@ -16,7 +16,7 @@ body {
 
 .content_container {
   position: fixed;
-  top:52%;
+  top:51%;
   left:50%;
   transform: translate(-50%, -50%);
   display: grid;
@@ -62,7 +62,7 @@ body {
 }
 
 .language_button_container {
-  width: 50px;
+  width: 70px;
 }
 
 .language_button {
