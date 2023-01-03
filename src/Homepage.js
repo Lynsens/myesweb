@@ -142,12 +142,8 @@ const HomePage = () => {
         <>
         {console.log(currIndex)}
         <Menu isOpen={isOpen} onClose={closeMenu}>
-            <div class="language_button_container" ref = {ref}>
-                {!isComponentVisible && (
-                    <button class = "language_button" onClick={()=>setIsComponentVisible(true)}/>
-                )}
-                {isComponentVisible && (<LanguageButtons handleClick={onClickLanguageButton}/>)}
-            </div>
+            <p>Language</p>
+            <LanguageButtons handleClick={onClickLanguageButton}/>
         </Menu>
         {!langSelected ?(
             <>

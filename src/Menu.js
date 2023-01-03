@@ -8,13 +8,10 @@ const Menu = ({isOpen, onClose, children}) => {
                 <div class="overlay">
                     <div class="overlay_background">
                     <div class="overlay_container">
-                        {/* <div class="overlay_controls">
-                            <button onClick={onClose}>
-                                close
-                             </button>
-                        </div> */}
+                        <div class="overlay_grid">
+                            {children}
+                        </div>
                     </div>
-                    {children}
                     </div>
                 </div>
             )}

@@ -41,3 +41,26 @@
     font-size: 36px;
     cursor: pointer;
   }
+
+  .overlay_container{
+    display: grid;
+    align-items: center;
+  }
+
+  .overlay_grid{
+    display: grid;
+    grid-template-columns: [line1] 100px [line2] 80px [end];
+    grid-template-rows: auto;
+    align-items: center;
+    text-align: center;
+    justify-self: center;
+
+    color: lightgrey;
+    margin-top: 10em;
+    
+
+  }
+
+  .overlay_container .language_buttons_container button{
+    color: white;
+  }

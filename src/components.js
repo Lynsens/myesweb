@@ -2,10 +2,11 @@ import { Language } from "./mock";
 
 export const LanguageButtons = ({handleClick}) => {
     return(
-        <>
-            <button onClick={() => {handleClick(Language.ENG)}}>ENG</button>
-            <button onClick={() => {handleClick(Language.CHN)}}>中文</button>
-        </>
+        <div class="language_buttons_container">
+            <button class="language_buttons" onClick={() => {handleClick(Language.ENG)}}>ENG</button>
+            <p>|</p>
+            <button class="language_buttons" onClick={() => {handleClick(Language.CHN)}}>中文</button>
+        </div>
     )
 }
 
@@ -14,6 +15,8 @@ export const HomeButton = ({handleClick}) =>
 
 export const MenuButton = ({handleClick, isMenuOpen}) => {
     return (
-        !isMenuOpen ? <button class = "menu_button" onClick={handleClick}></button> : <button class = "close_button" onClick={handleClick}></button>);
-}
+        <div class="menu_button_container">
+            {!isMenuOpen ? <button class = "menu_button" onClick={handleClick}></button> : <button class = "close_button" onClick={handleClick}></button>}
+        </div>
+)}
     
