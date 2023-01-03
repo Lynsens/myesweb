@@ -44,8 +44,8 @@ const HomePage = () => {
         setIsOpen(false);
     }
 
-    const openMenu = () => {
-        setIsOpen(true);
+    const onClickMenu = () => {
+        setIsOpen(!isOpen);
     }
     
     const closeMenu = () => {
@@ -113,7 +113,7 @@ const HomePage = () => {
                     <>
                     <div class="homepage"> 
                         <div class="top_bar">
-                            <MenuButton handleClick = {()=>setIsOpen(true)}/>
+                            <MenuButton isMenuOpen={isOpen} handleClick={()=>setIsOpen(!isOpen)}/>
                             <div class="index_button_container">
                             <IndexButtons/>
                             </div>

@@ -83,4 +83,14 @@ body {
   background-size: cover;
   width: 30px;
   height: 30px;
+  z-index: 10;
 }
+
+.close_button {
+  background-image: url('./icons/close_icon.png');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  z-index: 10;
+}
+
