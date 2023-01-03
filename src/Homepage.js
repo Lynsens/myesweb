@@ -2,7 +2,7 @@ import './Homepage.css';
 import React, { useEffect, useState, useRef } from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Nodes, {Language} from './mock';
-import { LanguageButtons, HomeButton } from './components';
+import { LanguageButtons, HomeButton, MenuButton } from './components';
 import WelcomePage from './Welcomepage';
 import Menu from './Menu';
 
@@ -36,11 +36,16 @@ const HomePage = () => {
 
     const [langSelected, setLanSelected] = useState(window.sessionStorage.getItem("langSelected") ?? false);
 
-    const handleClick = (language) => {
+    const onClickLanguageButton = (language) => {
         setCurrLan(language);
         setIndex(0);
         setIsComponentVisible(false);
         setLanSelected(true)
+        setIsOpen(false);
+    }
+
+    const openMenu = () => {
+        setIsOpen(true);
     }
     
     const closeMenu = () => {
@@ -86,17 +91,17 @@ const HomePage = () => {
     
         const currNode = currNodes[currIndex];
         
-        useEffect(() => {
-            window.sessionStorage.setItem("langSelected", langSelected);
-        }, [langSelected]);
+        // useEffect(() => {
+        //     window.sessionStorage.setItem("langSelected", langSelected);
+        // }, [langSelected]);
 
-        useEffect(() => {
-            window.sessionStorage.setItem("currLan", currLan);
-        }, [currLan]);
+        // useEffect(() => {
+        //     window.sessionStorage.setItem("currLan", currLan);
+        // }, [currLan]);
 
-        useEffect(() => {
-            window.sessionStorage.setItem("currIndex", currIndex);
-        }, [currIndex]);
+        // useEffect(() => {
+        //     window.sessionStorage.setItem("currIndex", currIndex);
+        // }, [currIndex]);
 
         // useEffect(() => {
         // }, [currIndex, currLan, currNodes, isComponentVisible]);
@@ -108,13 +113,7 @@ const HomePage = () => {
                     <>
                     <div class="homepage"> 
                         <div class="top_bar">
-                            {/* <div class="language_button_container" ref = {ref}>
-                                {!isComponentVisible && (
-                                    <button class = "language_button" onClick={()=>setIsComponentVisible(true)}/>
-                                )}
-                                {isComponentVisible && (<LanguageButtons handleClick={handleClick}/>)}
-                            </div> */}
-                            <button onClick={()=>setIsOpen(!isOpen)}> open menu</button>
+                            <MenuButton handleClick = {()=>setIsOpen(true)}/>
                             <div class="index_button_container">
                             <IndexButtons/>
                             </div>
@@ -129,7 +128,7 @@ const HomePage = () => {
                 } />
                 <Route path = "/myesweb/post" element = {
                     <>  
-                        <button onClick={()=>setIsOpen(!isOpen)}> open menu</button>
+                        <MenuButton handleClick = {()=>setIsOpen(true)}/>
                         <HomeButton handleClick = {navigateHome}/>
                         <p>{currNode.content}</p>
                         <p>currIndex = {currIndex}, currLan = {currLan}</p>
@@ -143,10 +142,18 @@ const HomePage = () => {
         <>
         {console.log(currIndex)}
         <Menu isOpen={isOpen} onClose={closeMenu}>
-                        123
+            <div class="language_button_container" ref = {ref}>
+                {!isComponentVisible && (
+                    <button class = "language_button" onClick={()=>setIsComponentVisible(true)}/>
+                )}
+                {isComponentVisible && (<LanguageButtons handleClick={onClickLanguageButton}/>)}
+            </div>
         </Menu>
-        {!langSelected ? 
-        <WelcomePage languageButtonsHandleClick={handleClick}/> 
+        {!langSelected ?(
+            <>
+            <WelcomePage menuClick={()=>setIsOpen(true)} languageButtonsHandleClick={onClickLanguageButton}/> 
+            </>
+        )
         : 
         <MiddleContatiner/>}
         </>

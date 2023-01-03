@@ -77,3 +77,10 @@ body {
   display: grid;
   text-align: center;
 }
+
+.menu_button {
+  background-image: url('./icons/menu icon.png');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+}

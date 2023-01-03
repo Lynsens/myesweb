@@ -11,3 +11,6 @@ export const LanguageButtons = ({handleClick}) => {
 
 export const HomeButton = ({handleClick}) => 
     <button onClick = {handleClick}>Home</button>;
+
+export const MenuButton = ({handleClick}) => 
+    <button class = "menu_button" onClick={handleClick}></button>
