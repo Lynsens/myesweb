@@ -28,28 +28,49 @@ const useComponentVisible = (initState) => {
     return { ref, isComponentVisible, setIsComponentVisible };
 }
 
+const useMenuOpen = (initState) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(
+    initState
+    );
+    //   const ref = useRef(null);
+    
+    //   const handleClickOutside = event => {
+    //     if (ref.current && !ref.current.contains(event.target)) {
+    //       setIsComponentVisible(false);
+    //     }
+    //   };
+
+      const handleKeyDown = event => {
+        if (event.key === "Escape") {
+            setIsMenuOpen(false);
+          }
+        };
+
+      useEffect(() => {
+        
+        document.addEventListener("keydown", handleKeyDown, true);
+        return () => {
+          document.removeEventListener("keydown", handleKeyDown, true);
+        };
+      });
+
+    return { isMenuOpen, setIsMenuOpen };
+}
+
 const HomePage = () => {
     const [currLan, setCurrLan] = useState(window.sessionStorage.getItem("currLan") ?? Language.ENG);
     const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
-    const {ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
-    const [isOpen, setIsOpen] = useState(false);
+    // const {ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+    const {isMenuOpen, setIsMenuOpen} = useMenuOpen(false);
 
     const [langSelected, setLanSelected] = useState(window.sessionStorage.getItem("langSelected") ?? false);
 
     const onClickLanguageButton = (language) => {
         setCurrLan(language);
         setIndex(0);
-        setIsComponentVisible(false);
+        // setIsComponentVisible(false);
         setLanSelected(true)
-        setIsOpen(false);
-    }
-
-    const onClickMenu = () => {
-        setIsOpen(!isOpen);
-    }
-    
-    const closeMenu = () => {
-        setIsOpen(false);
+        setIsMenuOpen(false);
     }
 
     const MiddleContatiner = () => {
@@ -113,7 +134,7 @@ const HomePage = () => {
                     <>
                     <div class="homepage"> 
                         <div class="top_bar">
-                            <MenuButton isMenuOpen={isOpen} handleClick={()=>setIsOpen(!isOpen)}/>
+                            <MenuButton isMenuOpen={isMenuOpen} handleClick={()=>setIsMenuOpen(!isMenuOpen)}/>
                             <div class="index_button_container">
                             <IndexButtons/>
                             </div>
@@ -128,7 +149,7 @@ const HomePage = () => {
                 } />
                 <Route path = "/myesweb/post" element = {
                     <>  
-                        <MenuButton handleClick = {()=>setIsOpen(true)}/>
+                        <MenuButton handleClick = {()=>setIsMenuOpen(true)}/>
                         <HomeButton handleClick = {navigateHome}/>
                         <p>{currNode.content}</p>
                         <p>currIndex = {currIndex}, currLan = {currLan}</p>
@@ -141,13 +162,13 @@ const HomePage = () => {
     return(
         <>
         {console.log(currIndex)}
-        <Menu isOpen={isOpen} onClose={closeMenu}>
+        <Menu isOpen={isMenuOpen} onClose={()=>setIsMenuOpen(false)}>
             <p>Language</p>
             <LanguageButtons handleClick={onClickLanguageButton}/>
         </Menu>
         {!langSelected ?(
             <>
-            <WelcomePage menuClick={()=>setIsOpen(true)} languageButtonsHandleClick={onClickLanguageButton}/> 
+            <WelcomePage menuClick={()=>setIsMenuOpen(true)} languageButtonsHandleClick={onClickLanguageButton}/> 
             </>
         )
         : 
