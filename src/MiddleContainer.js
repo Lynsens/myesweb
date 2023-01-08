@@ -103,7 +103,7 @@ const MiddleContainer = (props) => {
                     {console.log(props.renderTime)}
                     <Animation show ={show} duration={DELAY}>
                         <div className="content_container">
-                            <img className = "centerPhoto" key = { props.currLan} src ={require(`./img/${currNode.image}.jpg`)}/>
+                            <img className = "centerPhoto" key = { props.currLan} src ={require(`./img/${currNode.image}.JPG`)}/>
                             <ViewPostButton/>
                         </div>
                     </Animation>
