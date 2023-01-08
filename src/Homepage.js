@@ -54,6 +54,7 @@ const useMenuOpen = (initState) => {
 
 const HomePage = () => {
     const [currLan, setCurrLan] = useState(window.sessionStorage.getItem("currLan") ?? Language.ENG);
+    const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
     // const {ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
     const {isMenuOpen, setIsMenuOpen} = useMenuOpen(false);
 
@@ -64,6 +65,7 @@ const HomePage = () => {
         // setIsComponentVisible(false);
         setLanSelected(true)
         setIsMenuOpen(false);
+        setIndex(0);
     }
     return(
         <>
@@ -77,7 +79,7 @@ const HomePage = () => {
             </>
         )
         : 
-        <MiddleContainer currLan={currLan} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>}
+        <MiddleContainer currLan={currLan} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} currIndex={currIndex} setIndex={setIndex}/>}
         </>
     )
 }

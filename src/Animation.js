@@ -57,7 +57,6 @@ class Animation extends Component {
   }
 
   performEnter() {
-    // setTimeout(()=>{},2000);
     this.setState({ status: ENTERING }, () => {
       setTimeout(() => {
         this.setState({ status: ENTERED }, () => {});

@@ -11,16 +11,16 @@ import Menu from './Menu';
 const MiddleContainer = (props) => {
     const DELAY = 1500;
     const [show,setShow] = useState(false);
-    const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
+    // const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
 
     const currNodes = Nodes.filter(n => n.language === props.currLan || n.language === Language.ALL);
 
     const delay = t => new Promise(r => setTimeout(r, t));
 
     async function onClickIndexButtonDelay(index, t) {
-        setShow(!show);
+        await setShow(!show);
         await delay(t);
-        setIndex(index);
+        await props.setIndex(index);
     }
 
     const indexingButton = (index) => {
@@ -28,7 +28,7 @@ const MiddleContainer = (props) => {
         <button className='index_button' 
                 key = {index}
                 style = {
-                    index == currIndex ? {opacity: 1, fontWeight: "550"} : {opacity: 0.5}
+                    index == props.currIndex ? {opacity: 1, fontWeight: "550"} : {opacity: 0.5}
                 }
                 onClick={() => onClickIndexButtonDelay(index, DELAY)}>
             {index}
@@ -36,13 +36,13 @@ const MiddleContainer = (props) => {
 
     const IndexButtons = () => {
         return(
-            currNodes.map((_n, index) => indexingButton(index, currIndex))
+            currNodes.map((_n, index) => indexingButton(index, props.currIndex))
             );
     };
 
     const ViewPostButton = () => {
         return(
-            <button class="click_to_view_button" onClick={navigateToPost}>{`${currNodes[currIndex].alt}   >`}</button>
+            <button class="click_to_view_button" onClick={navigateToPost}>{`${currNodes[props.currIndex].alt}   >`}</button>
         )
     };
 
@@ -56,17 +56,15 @@ const MiddleContainer = (props) => {
         navigate('/myesweb');
     }
 
-    const currNode = currNodes[currIndex];
+    const currNode = currNodes[props.currIndex];
 
 
     useEffect(()=>{
-        setShow(true);
-        return () => {
-            setShow(false);
-            console.log("this is effect");
-            console.log(show);
+        async function triggerImageContent(){
+            await setShow(true);
         }
-    },[currIndex]);
+        triggerImageContent();
+    },[props.currIndex]);
     
     // useEffect(() => {
     //     window.sessionStorage.setItem("langSelected", langSelected);
@@ -98,7 +96,7 @@ const MiddleContainer = (props) => {
                     </div>
                     <Animation show ={show} duration={DELAY}>
                         <div className="content_container">
-                            <img class = "centerPhoto" key = {currIndex} src ={require(`./img/${currNode.image}.jpg`)}/>
+                            <img class = "centerPhoto" key = {props.currIndex} src ={require(`./img/${currNode.image}.jpg`)}/>
                             <ViewPostButton/>
                         </div>
                     </Animation>
@@ -111,7 +109,7 @@ const MiddleContainer = (props) => {
                     <MenuButton handleClick = {()=>props.setIsMenuOpen(true)}/>
                     <HomeButton handleClick = {navigateHome}/>
                     <p>{currNode.content}</p>
-                    <p>currIndex = {currIndex}, currLan = {props.currLan}</p>
+                    <p>props.currIndex = {props.currIndex}, currLan = {props.currLan}</p>
                 </>
             }/>
         </Routes>
