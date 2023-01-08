@@ -13,10 +13,10 @@ export const LanguageButtons = ({handleClick}) => {
 export const HomeButton = ({handleClick}) => 
     <button onClick = {handleClick}>Home</button>;
 
-export const MenuButton = ({handleClick, isMenuOpen}) => {
+export const MenuButton = (props) => {
     return (
         <div class="menu_button_container">
-            {!isMenuOpen ? <button class = "menu_button" onClick={handleClick}></button> : <button class = "close_button" onClick={handleClick}></button>}
+            {!props.isMenuOpen ? <button class = "menu_button" onClick={props.handleClick}></button> : <button class = "close_button" onClick={props.handleClick}></button>}
         </div>
 )}
     
