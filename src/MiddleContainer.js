@@ -11,7 +11,6 @@ import Menu from './Menu';
 const MiddleContainer = (props) => {
     const DELAY = 1000;
     const [show,setShow] = useState(false);
-    // const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
 
     const currNodes = Nodes.filter(n => n.language === props.currLan || n.language === Language.ALL);
 
@@ -19,7 +18,7 @@ const MiddleContainer = (props) => {
 
     async function onClickIndexButtonDelay(index, t) {
         await setShow(!show);
-        await delay(t);
+        await delay(1.1*t);
         await props.setIndex(index);
     }
 
