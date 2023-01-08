@@ -9,7 +9,7 @@ import WelcomePage from './Welcomepage';
 import Menu from './Menu';
 
 const MiddleContainer = (props) => {
-    const DELAY = 1500;
+    const DELAY = 1000;
     const [show,setShow] = useState(false);
     // const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
 
