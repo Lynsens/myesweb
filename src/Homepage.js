@@ -1,6 +1,5 @@
 import './Homepage.css';
 import React, { useEffect, useState, useRef } from 'react';
-import {Routes, Route, useNavigate} from 'react-router-dom';
 import Nodes, {Language} from './mock';
 
 import { LanguageButtons, HomeButton, MenuButton } from './components';
@@ -8,28 +7,6 @@ import Animation from './Animation';
 import WelcomePage from './Welcomepage';
 import Menu from './Menu';
 import MiddleContainer from './MiddleContainer';
-
-const useComponentVisible = (initState) => {
-    const [isComponentVisible, setIsComponentVisible] = useState(
-        initState
-      );
-      const ref = useRef(null);
-    
-      const handleClickOutside = event => {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsComponentVisible(false);
-        }
-      };
-
-      useEffect(() => {
-        document.addEventListener("click", handleClickOutside, true);
-        return () => {
-          document.removeEventListener("click", handleClickOutside, true);
-        };
-      });
-
-    return { ref, isComponentVisible, setIsComponentVisible };
-}
 
 const useMenuOpen = (initState) => {
     const [isMenuOpen, setIsMenuOpen] = useState(
@@ -55,14 +32,15 @@ const useMenuOpen = (initState) => {
 const HomePage = () => {
     const [currLan, setCurrLan] = useState(window.sessionStorage.getItem("currLan") ?? Language.ENG);
     const [currIndex, setIndex] = useState(window.sessionStorage.getItem("currIndex") ?? 0);
-    // const {ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+    // const renderTime = useRef(0);
+    const [renderTime, setRenderTime] = useState(0);
     const {isMenuOpen, setIsMenuOpen} = useMenuOpen(false);
 
     const [langSelected, setLanSelected] = useState(window.sessionStorage.getItem("langSelected") ?? false);
 
     const onClickLanguageButton = (language) => {
+        setRenderTime(0);
         setCurrLan(language);
-        // setIsComponentVisible(false);
         setLanSelected(true)
         setIsMenuOpen(false);
         setIndex(0);
@@ -79,7 +57,15 @@ const HomePage = () => {
             </>
         )
         : 
-        <MiddleContainer currLan={currLan} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} currIndex={currIndex} setIndex={setIndex}/>}
+        <MiddleContainer 
+            currLan={currLan} 
+            isMenuOpen={isMenuOpen} 
+            setIsMenuOpen={setIsMenuOpen} 
+            currIndex={currIndex}
+            setIndex={setIndex}
+            renderTime={renderTime}
+            setRenderTime={setRenderTime}/>
+        }
         </>
     )
 }

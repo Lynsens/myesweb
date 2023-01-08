@@ -5,10 +5,10 @@ const Menu = ({isOpen, onClose, children}) => {
     return (
         <Fragment>
             {isOpen && (
-                <div class="overlay">
-                    <div class="overlay_background">
-                    <div class="overlay_container">
-                        <div class="overlay_grid">
+                <div className="overlay">
+                    <div className="overlay_background">
+                    <div className="overlay_container">
+                        <div className="overlay_grid">
                             {children}
                         </div>
                     </div>
