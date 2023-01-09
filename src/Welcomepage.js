@@ -9,6 +9,7 @@ const WelcomePage = ( {menuClick, languageButtonsHandleClick}) => {
                 <p>Welcome to the website</p>
                 <h1>Mocun Ye</h1>
                 <>
+                <h5>*This website is currently under construction</h5>
                 <p>select a language</p>
                 <p>请选择语言</p>
                 </>

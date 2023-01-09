@@ -1,22 +1,27 @@
 import './Homepage.css';
+import './Animation.css';
 import React, { useEffect, useState, useRef } from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Nodes, {Language} from './mock';
 
 import { HomeButton, MenuButton } from './components';
 import Animation from './Animation';
+import PostContent from './PostContent';
+import { CSSTransition } from 'react-transition-group';
+
 
 
 const MiddleContainer = (props) => {
     const DELAY = 1200;
     const [show,setShow] = useState(false);
+    
 
     const currNodes = Nodes.filter(n => n.language === props.currLan || n.language === Language.ALL);
 
     const delay = t => new Promise(r => setTimeout(r, t));
     async function onClickIndexButtonDelay(index, t) {
         await setShow(!show);
-        await delay(1.1*t);
+        await delay(1.2*t);
         await props.setIndex(index);
     }
 
@@ -68,7 +73,7 @@ const MiddleContainer = (props) => {
     useEffect(()=>{
         async function triggerImageContent(){
             if(props.renderTime === 0 || prevLan !== props.currLan) {
-                await delay(200);
+                await delay(600);
                 await setShow(true);
                 await props.setRenderTime(1);
             }
@@ -92,14 +97,20 @@ const MiddleContainer = (props) => {
         <Routes>
             <Route path = "/myesweb" element = {
                 <>
-                <div className="homepage"> 
-                    <div className="top_bar">
+                <div className="homepage">
+                <CSSTransition in={true}
+                    appear={true}
+                    timeout={500}
+                    classNames="fade"
+                    unmountOnExit> 
+                    <div className="top_bar fade">
                         <MenuButton isMenuOpen={props.isMenuOpen} handleClick={()=>props.setIsMenuOpen(!props.isMenuOpen)}/>
                         <div className="index_button_container">
                         <IndexButtons/>
                         </div>
-                        <p className="name"> Mocun Ye </p>
+                        <p className="name_container"> Mocun Ye </p>
                     </div>
+                </CSSTransition>
                     {console.log(props.renderTime)}
                     <Animation show ={show} duration={DELAY}>
                         <div className="content_container">
@@ -113,12 +124,20 @@ const MiddleContainer = (props) => {
                 </>
             } />
             <Route path = "/myesweb/post" element = {
-                <>  
-                    <MenuButton handleClick = {()=>props.setIsMenuOpen(true)}/>
-                    <HomeButton handleClick = {navigateHome}/>
-                    <p>{currNode.content}</p>
-                    <p>props.currIndex = {props.currIndex}, currLan = {props.currLan}</p>
-                </>
+                <div className="post">
+                    <div className="img_bar">
+                        <div className="top_bar_post">
+                            <MenuButton isMenuOpen={props.isMenuOpen} handleClick={()=>props.setIsMenuOpen(!props.isMenuOpen)}/>
+                            <HomeButton handleClick = {navigateHome}/>
+                        </div>
+                    </div>
+                    <PostContent>
+                        <p>{currNode.content}</p>
+                        <p>props.currIndex = {props.currIndex}, currLan = {props.currLan}</p>
+                        
+                    </PostContent>
+
+                </div>
             }/>
         </Routes>
         </>

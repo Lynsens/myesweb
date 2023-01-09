@@ -3,12 +3,14 @@ button {
   padding: 0;
   border: none;
   text-align: center;
+  margin: 0;
+  font-family: "PingFang SC", "SF Pro SC", "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 body {
   background-color: rgba(242, 245, 248, 0.2)
-}
 
+}
 
 .homepage {
   display: grid;
@@ -24,14 +26,14 @@ body {
   column-count: 1;
 
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
 }
 
 .top_bar {
   display: grid;
   column-count: 3;
   grid-template-columns: auto auto auto;
-  justify-content:  space-between;
+  /* justify-content:  space-between; */
   
   margin-top: 0.5em;
   margin-left: 2em;
@@ -41,8 +43,45 @@ body {
   align-items: center;
 }
 
-.index_button_contatin{
+.top_bar_post {
+  display: grid;
+  column-count: 2;
+  grid-template-columns: auto auto;
+  /* justify-content:  space-between; */
+  padding-top: 0.5em;
+  margin-left: 2em;
+  margin-right: 2em;
+  /* margin-bottom: 2em; */
+
+  align-items: center;
+
+  z-index: 1;
+}
+
+.home_button {
+  text-align: right;
+  font-family: 'Jura';
+  font-size: 18px;
+  margin-top: 18;
+
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.name_container {
+  text-align: right;
+  font-family: 'Jura';
+  font-size: 18px;
+}
+
+.index_button_container{
+  display: flex;
   text-align: center;
+  align-items: center;
+  justify-content:  center;
 }
 
 .index_button {
@@ -67,6 +106,7 @@ body {
 
 .click_to_view_button {
   text-align: end;
+  font-size: 14px;
 }
 
 .language_buttons_container {
@@ -87,6 +127,10 @@ body {
   display: grid;
   text-align: center;
   align-items: center;
+
+  font-family: "PingFang SC";
+
+  font-size: 18px;
 }
 
 .menu_button {
@@ -126,3 +170,16 @@ body {
 .language_buttons_container button{
   margin: .25em;
 }
+
+.post {
+
+}
+
+.img_bar {
+  top:0;
+  max-width: 100%;
+  height: 400px;
+
+  background-image: url("./img/bar1.jpeg");
+}
+
